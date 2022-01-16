@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+
 import {
   Button,
   Typography,
@@ -11,6 +14,8 @@ import {
   Radio,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
+
+const url = "http://localhost:8000/notes";
 
 const fieldStyle = {
   marginTop: "20px",
@@ -27,6 +32,8 @@ export default function Create() {
 
   const [category, setCategory] = useState("money");
 
+  const history = useHistory();
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -42,10 +49,15 @@ export default function Create() {
 
     if (title && details) {
       const note = { title, details, category };
-      console.log(note);
+      // console.log(note);
 
-      setTitle("");
-      setDetails("");
+      axios.post(url, note).then((res) => {
+        console.log(res.data);
+
+        setTitle("");
+        setDetails("");
+        history.push("/");
+      });
     }
   };
 
