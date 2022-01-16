@@ -7,11 +7,9 @@ import { purple } from "@mui/material/colors";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#fefefe",
+      main: "#333",
     },
-    secondary: {
-      main: purple[500],
-    },
+    secondary: purple,
   },
   typography: {
     fontFamily: "Quicksand",
