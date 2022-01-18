@@ -1,12 +1,17 @@
 import { AddCircleOutline, SubjectRounded } from "@mui/icons-material";
 import {
+  AppBar,
+  Button,
   Drawer,
+  IconButton,
   List,
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Toolbar,
   Typography,
 } from "@mui/material";
+import { format } from "date-fns";
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
@@ -30,6 +35,15 @@ const Layout = ({ children }) => {
 
   return (
     <div style={rootStyle}>
+      {/* navbar - app bar */}
+      <AppBar style={appBarStyle}>
+        <Toolbar>
+          <Typography>
+            {" "}
+            Today is the {format(new Date(), "do MMMM Y")}
+          </Typography>
+        </Toolbar>
+      </AppBar>
       {/* side nav - side drawer */}
       <Drawer sx={drawerStyle} variant="permanent" anchor="left">
         <div>
@@ -50,7 +64,10 @@ const Layout = ({ children }) => {
         </List>
       </Drawer>
 
-      <div style={pageStyle}>{children}</div>
+      <div style={pageStyle}>
+        <div style={spacerStyle}></div>
+        {children}
+      </div>
     </div>
   );
 };
@@ -61,6 +78,10 @@ export default Layout;
 const pageStyle = {
   backgroundColor: "#f9f9f9",
   width: "100%",
+};
+
+const spacerStyle = {
+  marginTop: 90,
 };
 
 const drawerWidth = 240;
@@ -80,4 +101,8 @@ const rootStyle = {
 
 const active = {
   backgroundColor: "#f4f4f4",
+};
+
+const appBarStyle = {
+  width: `calc( 100% - ${drawerWidth}px)`,
 };

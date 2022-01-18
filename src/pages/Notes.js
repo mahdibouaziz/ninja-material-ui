@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Container, Grid } from "@mui/material";
+import { Container } from "@mui/material";
 import NoteCard from "../components/NoteCard";
+import Masonry from "react-masonry-css";
 
 const url = "http://localhost:8000/notes";
 
 export default function Notes() {
   const [notes, setNotes] = useState(null);
+
+  const breakpoints = {
+    default: 3,
+    1100: 2,
+    700: 1,
+  };
 
   useEffect(() => {
     axios.get(url).then((res) => {
@@ -24,14 +31,18 @@ export default function Notes() {
 
   return (
     <Container>
-      <Grid container spacing={3}>
+      <Masonry
+        breakpointCols={breakpoints}
+        className="my-masonry-grid"
+        columnClassName="my-masonry-grid_column"
+      >
         {notes &&
           notes.map((note) => (
-            <Grid item key={note.id} xs={12} md={6} lg={4}>
+            <div key={note.id}>
               <NoteCard note={note} handleDelete={handleDelete} />
-            </Grid>
+            </div>
           ))}
-      </Grid>
+      </Masonry>
     </Container>
   );
 }
